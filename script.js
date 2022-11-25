@@ -3,68 +3,110 @@ function getComputerChoice() {
   let choice = Math.floor(Math.random() * 3 + 1);
   switch (choice) {
     case 1:
-      return 'rock';
+      return "rock";
     case 2:
-      return 'paper';
+      return "paper";
     case 3:
-      return 'scissors';
+      return "scissors";
   }
 }
 
-
-//Plays a single round of Rock Paper Scissors
+//Plays a single round of Rock Paper Scissors, logs result and returns winner
 function playRound(playerSelection, computerSelection) {
   let playerMove = playerSelection.toLowerCase();
-  // Including this in case computer choice is eventually exposed, easier than converting to caps afterwards
-  // let computerMove = computerSelection.toLowerCase();
 
-  if (playerMove === 'rock') {
+  if (playerMove === "rock") {
     switch (computerSelection) {
-      case 'rock':
-        return 'Tie!';
-      case 'paper':
-        return 'Computer wins! Paper beats rock.';
-      case 'scissors':
-        return 'You win! Rock beats scissors.';
+      case "rock":
+        console.log("Tie!");
+        return "tie";
+      case "paper":
+        console.log("Computer wins! Paper beats rock.");
+        return "computer";
+      case "scissors":
+        console.log("You win! Rock beats scissors.");
+        return "player";
     }
-  } else if (playerMove === 'paper') {
+  } else if (playerMove === "paper") {
     switch (computerSelection) {
-      case 'rock':
-        return 'You win! Paper beats rock.';
-      case 'paper':
-        return 'Tie!';
-      case 'scissors':
-        return 'Computer wins! Scissors beats paper.';
+      case "rock":
+        console.log("You win! Paper beats rock.");
+        return "player";
+      case "paper":
+        console.log("Tie!");
+        return "tie";
+      case "scissors":
+        console.log("Computer wins! Scissors beats paper.");
     }
-  } else if (playerMove === 'scissors') {
+  } else if (playerMove === "scissors") {
     switch (computerSelection) {
-      case 'rock':
-        return 'Computer wins! Rock beats scissors.';
-      case 'paper':
-        return 'You win! Scissors beats paper.';
-      case 'scissors':
-        return 'Tie!';
+      case "rock":
+        console.log("Computer wins! Rock beats scissors.");
+        return "computer";
+      case "paper":
+        console.log("You win! Scissors beats paper.");
+        return "player";
+      case "scissors":
+        console.log("Tie!");
+        return "tie";
     }
   } else {
-    return 'Invalid move!';
+    console.log("Invalid move!");
+    return "";
+  }
+}
+
+function game() {
+  let playerScore = 0;
+  let computerScore = 0;
+  let result = "";
+
+  for (let i = 0; i < 5; i++) {
+    let playerSelection = prompt("Enter your move!");
+    //Exits if no move entered
+    if (playerSelection === null || playerSelection === undefined) {
+      console.log("No move entered, ending game.");
+      return;
+    }
+
+    let computerSelection = getComputerChoice();
+    console.log(`You played ${playerSelection}`);
+    console.log(`Computer played ${computerSelection}`);
+    result = playRound(playerSelection, computerSelection);
+
+    //increments score based on round result
+    switch (result) {
+      case "player":
+        playerScore++;
+        break;
+      case "computer":
+        computerScore++;
+        break;
+      default:
+        break;
+    }
+
+    console.log(`Round ${i + 1}: ${playerScore} to ${computerScore}`);
+
+    //checks for early winner
+    if (playerScore >= 3) {
+      console.log("You win the game!");
+      return;
+    } else if (computerScore >= 3) {
+      console.log("Computer wins the game!");
+      return;
+    }
   }
 
+  if (playerScore > computerScore) {
+    console.log("You win the game!");
+  } else if (computerScore > playerScore) {
+    console.log("Computer wins the game!");
+  } else {
+    console.log("It's a tie!");
+  }
+
+  return;
 }
 
-function testRound(playerSelection) {
-  const computerSelection = getComputerChoice();
-  console.log(`Player: ${playerSelection}`);
-  console.log(`Computer: ${computerSelection}`);
-  console.log(playRound(playerSelection, computerSelection));
-}
-
-// Test Code
-// testRound('Rock');
-// testRound('Paper');
-// testRound('Scissors');
-// testRound('rock');
-// testRound('paper');
-// testRound('scissors');
-// testRound('banana');
-// testRound('rockscissors');
-// testRound('scissorspaper');
+game();
