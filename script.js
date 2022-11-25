@@ -63,7 +63,6 @@ function playGame() {
 
   for (let i = 0; i < 5; i++) {
     let playerSelection = prompt("Enter your move!");
-    //Exits if no move entered
     if (playerSelection === null || playerSelection === undefined) {
       console.log("No move entered, ending game.");
       return;
