@@ -51,10 +51,20 @@ function playRound(playerSelection, computerSelection) {
 
 }
 
+function testRound(playerSelection) {
+  const computerSelection = getComputerChoice();
+  console.log(`Player: ${playerSelection}`);
+  console.log(`Computer: ${computerSelection}`);
+  console.log(playRound(playerSelection, computerSelection));
+}
 
 // Test Code
-const playerSelection = "Rock";
-const computerSelection = getComputerChoice();
-console.log(`Player: ${playerSelection}`);
-console.log(`Computer: ${computerSelection}`);
-console.log(playRound(playerSelection, computerSelection));
+// testRound('Rock');
+// testRound('Paper');
+// testRound('Scissors');
+// testRound('rock');
+// testRound('paper');
+// testRound('scissors');
+// testRound('banana');
+// testRound('rockscissors');
+// testRound('scissorspaper');
