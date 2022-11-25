@@ -57,18 +57,21 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function playGame() {
+  let playerSelection;
+  let computerSelection;
   let playerScore = 0;
   let computerScore = 0;
   let result = "";
+  let roundCount = 1;
 
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("Enter your move!");
+  for (let i = 5; i--; ) {
+    playerSelection = prompt("Enter your move!");
     if (playerSelection === null || playerSelection === undefined) {
       console.log("No move entered, ending game.");
       return;
     }
 
-    let computerSelection = getComputerChoice();
+    computerSelection = getComputerChoice();
     console.log(`You played ${playerSelection}`);
     console.log(`Computer played ${computerSelection}`);
     result = playRound(playerSelection, computerSelection);
@@ -85,7 +88,8 @@ function playGame() {
         break;
     }
 
-    console.log(`Round ${i + 1}: ${playerScore} to ${computerScore}`);
+    console.log(`Round ${roundCount}: ${playerScore} to ${computerScore}`);
+    roundCount += 1;
 
     //checks for early winner
     if (playerScore >= 3) {
