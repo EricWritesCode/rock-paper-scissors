@@ -12,10 +12,10 @@ function getComputerChoice() {
 }
 
 //Plays a single round of Rock Paper Scissors, logs result and returns winner
-function playRound(playerSelection, computerSelection) {
-  let playerMove = playerSelection.toLowerCase();
+function playRound(playerInput, computerSelection) {
+  let playerSelection = playerInput.toLowerCase();
 
-  if (playerMove === "rock") {
+  if (playerSelection === "rock") {
     switch (computerSelection) {
       case "rock":
         console.log("Tie!");
@@ -27,7 +27,7 @@ function playRound(playerSelection, computerSelection) {
         console.log("You win! Rock beats scissors.");
         return "player";
     }
-  } else if (playerMove === "paper") {
+  } else if (playerSelection === "paper") {
     switch (computerSelection) {
       case "rock":
         console.log("You win! Paper beats rock.");
@@ -38,7 +38,7 @@ function playRound(playerSelection, computerSelection) {
       case "scissors":
         console.log("Computer wins! Scissors beats paper.");
     }
-  } else if (playerMove === "scissors") {
+  } else if (playerSelection === "scissors") {
     switch (computerSelection) {
       case "rock":
         console.log("Computer wins! Rock beats scissors.");
@@ -76,7 +76,6 @@ function playGame() {
     console.log(`Computer played ${computerSelection}`);
     result = playRound(playerSelection, computerSelection);
 
-    //increments score based on round result
     switch (result) {
       case "player":
         playerScore++;
