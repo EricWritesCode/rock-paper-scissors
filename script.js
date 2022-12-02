@@ -49,6 +49,7 @@ function playRound(playerInput) {
         return "tie";
       case "scissors":
         appendLine(resultsDiv, "Computer wins! Scissors beats paper.");
+        return "computer";
     }
   } else if (playerSelection === "scissors") {
     switch (computerSelection) {
@@ -81,31 +82,32 @@ function gameManager() {
   let result = "";
   let roundCount = 1;
   const buttons = Array.from(document.getElementsByTagName("button"));
-
+  const roundDisplay = document.getElementById("roundNumber");
+  const playerScoreBoard = document.getElementById("playerScore");
+  const compScoreBoard = document.getElementById("compScore");
+  
   // Creates event listeners for each selection button
   buttons.forEach((element) => {
     element.addEventListener("click", () => {
       result = playRound(element.id);
-      console.log(`Round ${roundCount}: ${playerScore} to ${computerScore}`);
+      switch (result) {
+        case "player":
+          playerScore++;
+          break;
+        case "computer":
+          computerScore++;
+          break;
+        default:
+          break;
+      }
+      // update scoreboard
       roundCount += 1;
+      roundDisplay.innerText = roundCount;
+      playerScoreBoard.innerText = playerScore;
+      compScoreBoard.innerText = computerScore;
     });
   });
 
-  // computerSelection = getComputerChoice();
-  // console.log(`You played ${playerSelection}`);
-  // console.log(`Computer played ${computerSelection}`);
-  // result = playRound(playerSelection, computerSelection);
-
-  switch (result) {
-    case "player":
-      playerScore++;
-      break;
-    case "computer":
-      computerScore++;
-      break;
-    default:
-      break;
-  }
 
   // if (playerScore > computerScore) {
   //   console.log("You win the game!");
