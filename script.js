@@ -1,3 +1,13 @@
+// score incremented
+// score checked for winner
+// if someone has five points, end game, create restart button
+
+function appendLine(rDiv, text) {
+  let newLine = document.createElement('p');;
+  newLine.innerText = text;
+  rDiv.appendChild(newLine);
+}
+
 // Randomly chooses a move for the computer
 function getComputerChoice() {
   let choice = Math.floor(Math.random() * 3 + 1);
@@ -12,103 +22,100 @@ function getComputerChoice() {
 }
 
 //Plays a single round of Rock Paper Scissors, logs result and returns winner
-function playRound(playerInput, computerSelection) {
-  let playerSelection = playerInput.toLowerCase();
+function playRound(playerInput) {
+  let resultsDiv = document.getElementById('resultsLog');
+  let playerSelection = playerInput;
+  let computerSelection = getComputerChoice();
 
   if (playerSelection === "rock") {
     switch (computerSelection) {
       case "rock":
-        console.log("Tie!");
+        appendLine(resultsDiv, "Tie!");
         return "tie";
       case "paper":
-        console.log("Computer wins! Paper beats rock.");
+        appendLine(resultsDiv, "Computer wins! Paper beats rock.");
         return "computer";
       case "scissors":
-        console.log("You win! Rock beats scissors.");
+        appendLine(resultsDiv, "You win! Rock beats scissors.");
         return "player";
     }
   } else if (playerSelection === "paper") {
     switch (computerSelection) {
       case "rock":
-        console.log("You win! Paper beats rock.");
+        appendLine(resultsDiv, "You win! Paper beats rock.");
         return "player";
       case "paper":
-        console.log("Tie!");
+        appendLine(resultsDiv, "Tie!");
         return "tie";
       case "scissors":
-        console.log("Computer wins! Scissors beats paper.");
+        appendLine(resultsDiv, "Computer wins! Scissors beats paper.");
     }
   } else if (playerSelection === "scissors") {
     switch (computerSelection) {
       case "rock":
-        console.log("Computer wins! Rock beats scissors.");
+        appendLine(resultsDiv, "Computer wins! Rock beats scissors.");
         return "computer";
       case "paper":
-        console.log("You win! Scissors beats paper.");
+        appendLine(resultsDiv, "You win! Scissors beats paper.");
         return "player";
       case "scissors":
-        console.log("Tie!");
+        appendLine(resultsDiv, "Tie!");
         return "tie";
     }
   } else {
+    // left over from when user could input text
     console.log("Invalid move!");
     return "";
   }
 }
 
-function playGame() {
+function checkScore() {
+
+}
+
+function gameManager() {
   let playerSelection;
   let computerSelection;
   let playerScore = 0;
   let computerScore = 0;
   let result = "";
   let roundCount = 1;
+  const buttons = Array.from(document.getElementsByTagName("button"));
 
-  for (let i = 5; i--; ) {
-    playerSelection = prompt("Enter your move!");
-    if (playerSelection === null || playerSelection === undefined) {
-      console.log("No move entered, ending game.");
-      return;
-    }
+  // Creates event listeners for each selection button
+  buttons.forEach((element) => {
+    element.addEventListener("click", () => {
+      result = playRound(element.id);
+      console.log(`Round ${roundCount}: ${playerScore} to ${computerScore}`);
+      roundCount += 1;
+    });
+  });
 
-    computerSelection = getComputerChoice();
-    console.log(`You played ${playerSelection}`);
-    console.log(`Computer played ${computerSelection}`);
-    result = playRound(playerSelection, computerSelection);
+  // computerSelection = getComputerChoice();
+  // console.log(`You played ${playerSelection}`);
+  // console.log(`Computer played ${computerSelection}`);
+  // result = playRound(playerSelection, computerSelection);
 
-    switch (result) {
-      case "player":
-        playerScore++;
-        break;
-      case "computer":
-        computerScore++;
-        break;
-      default:
-        break;
-    }
-
-    console.log(`Round ${roundCount}: ${playerScore} to ${computerScore}`);
-    roundCount += 1;
-
-    //checks for early winner
-    if (playerScore >= 3) {
-      console.log("You win the game!");
-      return;
-    } else if (computerScore >= 3) {
-      console.log("Computer wins the game!");
-      return;
-    }
+  switch (result) {
+    case "player":
+      playerScore++;
+      break;
+    case "computer":
+      computerScore++;
+      break;
+    default:
+      break;
   }
 
-  if (playerScore > computerScore) {
-    console.log("You win the game!");
-  } else if (computerScore > playerScore) {
-    console.log("Computer wins the game!");
-  } else {
-    console.log("It's a tie!");
-  }
+  // if (playerScore > computerScore) {
+  //   console.log("You win the game!");
+  // } else if (computerScore > playerScore) {
+  //   console.log("Computer wins the game!");
+  // } else {
+  //   console.log("It's a tie!");
+  // }
 
   return;
 }
 
-playGame();
+gameManager();
