@@ -3,7 +3,7 @@
 // if someone has five points, end game, create restart button
 
 function appendLine(rDiv, text) {
-  let newLine = document.createElement('p');;
+  let newLine = document.createElement("p");
   newLine.innerText = text;
   rDiv.appendChild(newLine);
 }
@@ -23,11 +23,10 @@ function getComputerChoice() {
 
 //Plays a single round of Rock Paper Scissors, logs result and returns winner
 function playRound(playerInput) {
-  let resultsDiv = document.getElementById('resultsLog');
-  let playerSelection = playerInput;
+  let resultsDiv = document.getElementById("resultsLog");
   let computerSelection = getComputerChoice();
 
-  if (playerSelection === "rock") {
+  if (playerInput === "rock") {
     switch (computerSelection) {
       case "rock":
         appendLine(resultsDiv, "Tie!");
@@ -39,7 +38,7 @@ function playRound(playerInput) {
         appendLine(resultsDiv, "You win! Rock beats scissors.");
         return "player";
     }
-  } else if (playerSelection === "paper") {
+  } else if (playerInput === "paper") {
     switch (computerSelection) {
       case "rock":
         appendLine(resultsDiv, "You win! Paper beats rock.");
@@ -51,7 +50,7 @@ function playRound(playerInput) {
         appendLine(resultsDiv, "Computer wins! Scissors beats paper.");
         return "computer";
     }
-  } else if (playerSelection === "scissors") {
+  } else if (playerInput === "scissors") {
     switch (computerSelection) {
       case "rock":
         appendLine(resultsDiv, "Computer wins! Rock beats scissors.");
@@ -70,13 +69,9 @@ function playRound(playerInput) {
   }
 }
 
-function checkScore() {
-
-}
+function checkScore() {}
 
 function gameManager() {
-  let playerSelection;
-  let computerSelection;
   let playerScore = 0;
   let computerScore = 0;
   let result = "";
@@ -85,7 +80,7 @@ function gameManager() {
   const roundDisplay = document.getElementById("roundNumber");
   const playerScoreBoard = document.getElementById("playerScore");
   const compScoreBoard = document.getElementById("compScore");
-  
+
   // Creates event listeners for each selection button
   buttons.forEach((element) => {
     element.addEventListener("click", () => {
@@ -107,7 +102,6 @@ function gameManager() {
       compScoreBoard.innerText = computerScore;
     });
   });
-
 
   // if (playerScore > computerScore) {
   //   console.log("You win the game!");
