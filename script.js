@@ -74,11 +74,11 @@ function judgeRound(resultsDiv, playerInput) {
   }
 }
 
-function playRound(allButtons, button, gameStats) {
+function playRound(allButtons, btn, gameStats) {
   const resultsDiv = document.getElementById("div-results");
   let result = "";
 
-  result = judgeRound(resultsDiv, button.id);
+  result = judgeRound(resultsDiv, btn.className);
   resultsDiv.scrollTop = resultsDiv.scrollHeight;
 
   switch (result) {

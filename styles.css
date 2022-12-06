@@ -1,6 +1,6 @@
 * {
   background-color: #f0fdfa;
-  color: #0d9488;
+  color: #134e4a;
 }
 
 body {
@@ -29,8 +29,8 @@ h3 {
   user-select: none;
 }
 
-.buttons-choice button,
-#btn-restart {
+button {
+  cursor:pointer;
   margin: 16px;
   padding: 4px;
   color: #134e4a;
@@ -45,9 +45,18 @@ h3 {
   align-items: center;
 }
 
+button:hover {
+  background-color: #14b8a6;
+}
+
+button:active {
+  border: none;
+  background-color: #0d9488;
+}
+
 button img {
   height: 48px;
-  background-color: #2dd4bf;
+  background-color: transparent;
   padding: 0 16px;
 }
 
@@ -65,6 +74,13 @@ button img {
 
 .score-header {
   margin-top: 0;
+}
+
+.score-divider {
+  height: 4px;
+  border: none;
+  background-color: #0d9488;
+  border-radius: 2px;
 }
 
 .div-score-counters {
