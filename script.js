@@ -1,7 +1,3 @@
-// score incremented
-// score checked for winner
-// if someone has five points, end game, create restart button
-
 function appendLine(rDiv, text) {
   let newLine = document.createElement("p");
   newLine.innerText = text;
@@ -21,9 +17,18 @@ function getComputerChoice() {
   }
 }
 
-//Plays a single round of Rock Paper Scissors, logs result and returns winner
-function playRound(playerInput) {
-  let resultsDiv = document.getElementById("resultsLog");
+function updateScoreboard(gameStats) {
+  const roundDisplay = document.getElementById("round-number");
+  const playerScoreBoard = document.getElementById("player-score");
+  const compScoreBoard = document.getElementById("comp-score");
+
+  roundDisplay.innerText = gameStats.roundCount;
+  playerScoreBoard.innerText = gameStats.playerScore;
+  compScoreBoard.innerText = gameStats.computerScore;
+}
+
+//takes in player's move, logs result and returns winner
+function judgeRound(resultsDiv, playerInput) {
   let computerSelection = getComputerChoice();
 
   if (playerInput === "rock") {
@@ -69,47 +74,73 @@ function playRound(playerInput) {
   }
 }
 
-function checkScore() {}
+function playRound(allButtons, button, gameStats) {
+  const resultsDiv = document.getElementById("div-results");
+  let result = "";
+
+  result = judgeRound(resultsDiv, button.id);
+  resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+  switch (result) {
+    case "player":
+      gameStats.playerScore += 1;
+      break;
+    case "computer":
+      gameStats.computerScore += 1;
+      break;
+    default:
+      break;
+  }
+
+  gameStats.roundCount += 1;
+  updateScoreboard(gameStats);
+  checkScore(gameStats, allButtons, resultsDiv);
+}
+
+function checkScore(gameStats, allButtons, resultsDiv) {
+  if (gameStats.playerScore > 4) {
+    appendLine(resultsDiv, "Game Over: You win!");
+    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+    allButtons.forEach((element) => (element.style.pointerEvents = "none"));
+  } else if (gameStats.computerScore > 4) {
+    appendLine(resultsDiv, "Game Over: Computer wins!");
+    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+    allButtons.forEach((element) => (element.style.pointerEvents = "none"));
+  }
+}
+
+function restartGame(buttons, gameStats) {
+  const resultsDiv = document.getElementById("div-results");
+  for (item in gameStats) {
+    gameStats[item] = 0;
+  }
+  updateScoreboard(gameStats);
+  buttons.forEach((element) => (element.style.pointerEvents = "auto"));
+  while (resultsDiv.firstChild) {
+    resultsDiv.removeChild(resultsDiv.firstChild);
+  }
+}
 
 function gameManager() {
-  let playerScore = 0;
-  let computerScore = 0;
-  let result = "";
-  let roundCount = 1;
-  const buttons = Array.from(document.getElementsByTagName("button"));
-  const roundDisplay = document.getElementById("roundNumber");
-  const playerScoreBoard = document.getElementById("playerScore");
-  const compScoreBoard = document.getElementById("compScore");
+  let gameStats = {
+    playerScore: 0,
+    computerScore: 0,
+    roundCount: 0,
+  };
+  const buttons = Array.from(
+    document.querySelectorAll(".buttons-choice button")
+  );
+  const restartButton = document.getElementById("btn-restart");
+
+  let choice_handler = () => playRound(buttons, event.target, gameStats);
+  let restart_handler = () => restartGame(buttons, gameStats);
 
   // Creates event listeners for each selection button
   buttons.forEach((element) => {
-    element.addEventListener("click", () => {
-      result = playRound(element.id);
-      switch (result) {
-        case "player":
-          playerScore++;
-          break;
-        case "computer":
-          computerScore++;
-          break;
-        default:
-          break;
-      }
-      // update scoreboard
-      roundCount += 1;
-      roundDisplay.innerText = roundCount;
-      playerScoreBoard.innerText = playerScore;
-      compScoreBoard.innerText = computerScore;
-    });
+    element.addEventListener("click", choice_handler);
   });
 
-  // if (playerScore > computerScore) {
-  //   console.log("You win the game!");
-  // } else if (computerScore > playerScore) {
-  //   console.log("Computer wins the game!");
-  // } else {
-  //   console.log("It's a tie!");
-  // }
+  restartButton.addEventListener("click", restart_handler);
 
   return;
 }
